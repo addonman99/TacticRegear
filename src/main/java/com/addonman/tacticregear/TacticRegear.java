@@ -1,5 +1,13 @@
 package com.addonman.tacticregear;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.core.registries.Registries;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredItem;
+
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.Commands;
@@ -27,12 +35,20 @@ import java.util.*;
 
 @Mod(TacticRegear.ID)
 public class TacticRegear {
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("tacticregear");
+
+    public static final DeferredItem<Item> LOADOUT = ITEMS.registerSimpleItem(
+        "loadout",
+        new Item.Properties().stacksTo(64)
+    );
+
     public static final String ID = "tacticregear";
     private static final SecureRandom RNG = new SecureRandom();
     private static final char[] B32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".toCharArray();
     private static final double STAND_RANGE = 16;
 
-    public TacticRegear() { NeoForge.EVENT_BUS.addListener(TacticRegear::commands); }
+    public TacticRegear() {
+        ITEMS.register(modEventBus); NeoForge.EVENT_BUS.addListener(TacticRegear::commands); }
 
     private static void commands(RegisterCommandsEvent e) {
         e.getDispatcher().register(Commands.literal("regear")
@@ -194,3 +210,11 @@ public class TacticRegear {
         }
     }
 }
+
+
+    @SubscribeEvent
+    public static void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(LOADOUT);
+        }
+    }
