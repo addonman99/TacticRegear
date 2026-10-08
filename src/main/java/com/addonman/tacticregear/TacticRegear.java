@@ -3,8 +3,6 @@ package com.addonman.tacticregear;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -20,15 +18,15 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import java.security.SecureRandom;
 import java.util.*;
@@ -47,8 +45,11 @@ public class TacticRegear {
     private static final char[] B32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".toCharArray();
     private static final double STAND_RANGE = 16;
 
-    public TacticRegear() {
-        ITEMS.register(modEventBus); NeoForge.EVENT_BUS.addListener(TacticRegear::commands); }
+    public TacticRegear(IEventBus modEventBus) {
+        ITEMS.register(modEventBus);
+        modEventBus.addListener(TacticRegear::addCreative);
+        NeoForge.EVENT_BUS.addListener(TacticRegear::commands);
+    }
 
     private static void commands(RegisterCommandsEvent e) {
         e.getDispatcher().register(Commands.literal("regear")
@@ -210,7 +211,6 @@ public class TacticRegear {
         }
     }
 
-    @SubscribeEvent
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(LOADOUT);
