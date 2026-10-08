@@ -209,8 +209,6 @@ public class TacticRegear {
             return t;
         }
     }
-}
-
 
     @SubscribeEvent
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -218,3 +216,6 @@ public class TacticRegear {
             event.accept(LOADOUT);
         }
     }
+
+}
+
