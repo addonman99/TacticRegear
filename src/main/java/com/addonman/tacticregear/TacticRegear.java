@@ -37,12 +37,12 @@ public class TacticRegear {
     private static void commands(RegisterCommandsEvent e) {
         e.getDispatcher().register(Commands.literal("regear")
             .then(Commands.literal("save").then(Commands.argument("name", StringArgumentType.word())
-                .executes(c -> { try { save(c.getSource(), StringArgumentType.getString(c, "name")); return 1; } catch (Exception e) { e.printStackTrace(); return 0; } })))
+                .executes(c -> { try { save(c.getSource(), StringArgumentType.getString(c, "name")); return 1; } catch (Exception ex) { ex.printStackTrace(); return 0; } })))
             .then(Commands.literal("load").then(Commands.argument("name", StringArgumentType.word())
                 .executes(c -> load(c.getSource(), StringArgumentType.getString(c, "name")))))
-            .then(Commands.literal("list").executes(c -> { try { list(c.getSource()); return 1; } catch (Exception e) { e.printStackTrace(); return 0; } }))
+            .then(Commands.literal("list").executes(c -> { try { list(c.getSource()); return 1; } catch (Exception ex) { ex.printStackTrace(); return 0; } }))
             .then(Commands.literal("delete").then(Commands.argument("name", StringArgumentType.word())
-                .executes(c -> { try { delete(c.getSource(), StringArgumentType.getString(c, "name")); return 1; } catch (Exception e) { e.printStackTrace(); return 0; } }))));
+                .executes(c -> { try { delete(c.getSource(), StringArgumentType.getString(c, "name")); return 1; } catch (Exception ex) { ex.printStackTrace(); return 0; } }))));
     }
 
     private static int save(CommandSourceStack src, String name) throws Exception {
