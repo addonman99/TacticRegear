@@ -18,7 +18,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemLore;
-import net.minecraft.world.level.storage.SavedData;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.fml.common.Mod;
