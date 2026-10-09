@@ -35,9 +35,9 @@ import java.util.*;
 public class TacticRegear {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("tacticregear");
 
-    public static final DeferredItem<Item> LOADOUT = ITEMS.registerSimpleItem(
+    public static final DeferredItem<LoadoutItem> LOADOUT = ITEMS.register(
         "loadout",
-        new Item.Properties().stacksTo(64)
+        () -> new LoadoutItem(new Item.Properties().stacksTo(64))
     );
 
     public static final String ID = "tacticregear";
